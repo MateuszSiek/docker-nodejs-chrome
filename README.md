@@ -1,4 +1,4 @@
-# Docker:
+# Docker image: [mateuszsiek/nodejs-chrome](https://hub.docker.com/r/mateuszsiek/nodejs-chrome/)
 
 Docker image with Node.JS v8.9.4, yarn and chrome browser installed.
 
