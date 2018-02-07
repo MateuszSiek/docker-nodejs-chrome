@@ -2,7 +2,7 @@
 
 Docker image with Node.JS v8.9.4, yarn and chrome browser installed.
 
-Created from [node:8.9.4-alpine](https://hub.docker.com/_/node/) image.
+Created from [node:8.9.4](https://hub.docker.com/_/node/) image.
 
 ## Features
 * Node.JS v8.9.4
