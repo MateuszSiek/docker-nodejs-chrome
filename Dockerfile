@@ -24,8 +24,11 @@ RUN \
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
-# Add zip utility - it comes in very handy
-RUN apt-get update && apt-get install -y zip
+# Add zip/gzip and rsync utility - it comes in very handy
+RUN apt-get update && apt-get install -y \
+ zip \
+ rsync \
+ gzip
 
 # a few environment variables to make NPM installs easier
 # good colors for most applications
