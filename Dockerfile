@@ -1,39 +1,25 @@
-FROM node:8.9.4
+# Image: mateuszsiek/nodejs-chrome
+FROM node:10.14.0
 
-USER root
-
-RUN apt-get update && \
-  apt-get install -y \
-    libgtk2.0-0 \
-    libnotify-dev \
-    libgconf-2-4 \
-    libnss3 \
-    libxss1 \
-    libasound2 \
-    xvfb
-
-# install Chromebrowser
 RUN \
+  apt-get update && \
+  `# Install tools necessary for Google Chrome to work` \
+  apt-get install -y apt-utils libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb && \
+  `# Install Chrome browser` \
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
   echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
   apt-get update && \
   apt-get install -y dbus-x11 google-chrome-stable && \
-  rm -rf /var/lib/apt/lists/*
+  `# Add handy tools...` && \
+  apt-get update && apt-get install -y gettext-base zip gzip rsync jq && \
+  apt-get clean
 
-# "fake" dbus address to prevent errors
-# https://github.com/SeleniumHQ/docker-selenium/issues/87
-ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-
-# Add zip/gzip and rsync utility - it comes in very handy
-RUN apt-get update && apt-get install -y \
- zip \
- rsync \
- gzip
-
-# a few environment variables to make NPM installs easier
-# good colors for most applications
-ENV TERM xterm
-# avoid million NPM install messages
-ENV npm_config_loglevel warn
-# allow installing when the main user is root
-ENV npm_config_unsafe_perm true
+# 1. "fake" dbus address to prevent errors: https://github.com/SeleniumHQ/docker-selenium/issues/87
+# 2. Good colors for most apps
+# 3. avoid million NPM install messages
+# 4. allow installing when the main user is root
+ENV \
+  DBUS_SESSION_BUS_ADDRESS=/dev/null \
+  TERM=xterm \
+  npm_config_loglevel=warn \
+  npm_config_unsafe_perm=true
