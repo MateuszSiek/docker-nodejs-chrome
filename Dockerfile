@@ -1,5 +1,5 @@
 # Image: mateuszsiek/nodejs-chrome
-FROM node:10.14.0
+FROM node:12.18.4
 
 RUN \
   apt-get update && \
